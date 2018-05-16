@@ -1,0 +1,40 @@
+#include "mbed.h"
+#include "hcsr04.h"
+
+DigitalOut myled(LED1);
+HCSR04  usensor(p25,p6);
+unsigned int dist;
+
+int main()
+{
+ 
+    while(1) {
+        usensor.start();
+        wait_ms(200); 
+        dist=usensor.get_dist_cm();
+        
+        if (dist <= 15)
+        { myled = 1;}
+            
+            else
+            
+                  if (dist <= 30 && dist > 15) {
+                  myled = 1;
+                  wait_ms(100);
+                  myled = 0;
+                  wait_ms(100);}
+                  
+            else
+            
+                  if (dist <= 100 && dist >30)
+                  {myled = 1;
+                  wait_ms(300);
+                  myled = 0;
+                  wait_ms(300); } 
+            else  
+                  myled = 0; 
+
+        printf("%ld",dist );
+            
+    }
+}
